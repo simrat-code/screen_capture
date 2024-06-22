@@ -4,6 +4,8 @@ from pynput import mouse
 
 from utils import Point
 
+import ui_interface as ui
+
 class SC:
     flag_capture = False
     point_start = Point(0, 0)
@@ -12,6 +14,9 @@ class SC:
 
     def onClick(self, x, y, button, pressed):
         print(f"{x} {y} {button} {pressed}")
+
+        if not pressed: return True 
+        
         if button == mouse.Button.left and not SC.flag_capture:
             SC.flag_capture = True
             SC.point_start.x, SC.point_start.y = x, y 
@@ -49,3 +54,6 @@ if __name__ == "__main__":
     screenshot = ImageGrab.grab(bbox=(sc.point_start.x, sc.point_start.y, sc.point_end.x, sc.point_end.y))
     screenshot.save("screenshot.png")
     screenshot.close()
+
+    ui.openUI("screenshot.png")
+
